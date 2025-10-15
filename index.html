@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="so">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Udug Bila — Carwo Ganacsi</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#f7f8fb;
+      --card:#ffffff;
+      --primary:#0b6efd;
+      --muted:#6b7280;
+      --accent:#ff7a59;
+      --max-width:1100px;
+      --radius:12px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background:var(--bg);
+      color:#0b1320;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
+    }
+
+    /* Container */
+    .container{
+      max-width:var(--max-width);
+      margin:0 auto;
+      padding:0 20px;
+    }
+
+    /* NAVBAR */
+    header{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter: blur(6px);
+      background:rgba(255,255,255,0.75);
+      border-bottom:1px solid rgba(15,23,42,0.05);
+    }
+    .nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:10px 0;
+      gap:20px;
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      text-decoration:none;
+      color:inherit;
+    }
+    .logo{
+      width:44px;height:44px;border-radius:10px;
+      background:linear-gradient(135deg,var(--primary),var(--accent));
+      display:inline-grid;place-items:center;color:white;font-weight:700;
+      box-shadow:0 6px 20px rgba(11,110,253,0.12);
+      flex-shrink:0;
+    }
+    nav ul{
+      list-style:none;
+      margin:0;padding:0;
+      display:flex;gap:18px;align-items:center;
+    }
+    nav a{
+      text-decoration:none;color:var(--muted);font-weight:600;
+      padding:8px 10px;border-radius:8px;font-size:15px;
+    }
+    nav a.active, nav a:hover{color:var(--primary);background:rgba(11,110,253,0.06)}
+
+    .cta{
+      background:var(--primary);color:white;padding:8px 14px;border-radius:10px;
+      text-decoration:none;font-weight:600;box-shadow:0 6px 18px rgba(11,110,253,0.12)
+    }
+
+    /* Mobile nav toggle */
+    .mobile-toggle{display:none;border:0;background:none;font-size:20px}
+
+    /* HERO */
+    .hero{
+      min-height:64vh;
+      display:grid;
+      grid-template-columns:1fr 460px;
+      gap:40px;
+      align-items:center;
+      padding:48px 0 80px;
+    }
+    .hero-left h1{
+      margin:0 0 16px;
+      font-size:clamp(28px,5vw,44px);
+      line-height:1.04;
+      color:#071133;
+    }
+    .hero-left p{margin:0 0 22px;color:var(--muted);font-size:16px}
+    .hero-actions{display:flex;gap:12px;align-items:center}
+    .hero .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.8), rgba(255,255,255,0.6));
+      border-radius:14px;padding:18px;box-shadow:0 10px 30px rgba(15,23,42,0.06);
+    }
+    .hero-right{
+      display:flex;align-items:center;justify-content:center;
+    }
+    .mock-image{
+      width:100%;max-width:420px;border-radius:16px;overflow:hidden;
+      background:linear-gradient(135deg,var(--primary),#7c3aed);
+      height:320px;display:grid;place-items:center;color:white;font-weight:700;
+      box-shadow:0 20px 40px rgba(12,30,80,0.12);
+    }
+
+    /* SECTIONS */
+    section{padding:64px 0}
+    .section-title{display:flex;align-items:baseline;gap:14px;margin-bottom:18px}
+    .section-title h2{margin:0;font-size:20px}
+    .section-sub{color:var(--muted);margin-bottom:28px}
+
+    /* Services grid */
+    .services-grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+    .service-card{
+      background:var(--card);border-radius:12px;padding:18px;border:1px solid rgba(11,17,28,0.04);
+      transition:transform .28s ease, box-shadow .28s ease;
+    }
+    .service-card:hover{transform:translateY(-8px);box-shadow:0 18px 28px rgba(11,17,28,0.06)}
+    .service-icon{width:56px;height:56px;border-radius:10px;display:grid;place-items:center;font-weight:700;background:linear-gradient(180deg,#fff,rgba(255,255,255,0.9));box-shadow:0 6px 18px rgba(11,110,253,0.06)}
+    .service-title{margin:10px 0 6px;font-weight:600}
+    .service-desc{color:var(--muted);font-size:14px}
+
+    /* About layout */
+    .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+    .about-image{width:100%;height:320px;border-radius:14px;overflow:hidden;background:url('https://images.unsplash.com/photo-1542744095-fcf48d80b0fd?q=80&w=1200&auto=format&fit=crop&ixlib=rb-4.0.3&s=') center/cover no-repeat;border:1px solid rgba(11,17,28,0.04)}
+    .about-text p{color:var(--muted)}
+
+    /* Contact */
+    .contact-wrap{display:grid;grid-template-columns:1fr 360px;gap:26px}
+    form{display:flex;flex-direction:column;gap:12px}
+    input,textarea{
+      padding:12px 14px;border-radius:10px;border:1px solid rgba(11,17,28,0.06);
+      font-family:inherit;font-size:15px;resize:vertical;background:white
+    }
+    button[type="submit"]{background:var(--primary);color:white;padding:12px 14px;border-radius:10px;border:0;font-weight:600;cursor:pointer}
+    .contact-info{background:var(--card);padding:18px;border-radius:12px;border:1px solid rgba(11,17,28,0.04)}
+    .small{font-size:13px;color:var(--muted)}
+
+    /* FOOTER */
+    footer{padding:28px 0;text-align:center;color:var(--muted);font-size:14px;border-top:1px solid rgba(15,23,42,0.03);background:transparent}
+
+    /* Responsive */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr; padding-top:36px}
+      .about-grid{grid-template-columns:1fr}
+      .contact-wrap{grid-template-columns:1fr}
+      nav ul{display:none}
+      .mobile-toggle{display:inline-block}
+    }
+
+    /* simple fade-in animation */
+    .reveal{opacity:0;transform:translateY(10px);transition:opacity .6s ease, transform .6s ease}
+    .reveal.visible{opacity:1;transform:none}
+  </style>
+</head>
+<body>
+
+  <!-- HEADER / NAV -->
+  <header>
+    <div class="container nav" role="navigation" aria-label="Main navigation">
+      <a class="brand" href="#home">
+        <div class="logo">UB</div>
+        <div>
+          <div style="font-weight:700">Udug Bila</div>
+          <div style="font-size:12px;color:var(--muted)">Carwo Ganacsi</div>
+        </div>
+      </a>
+
+      <nav aria-label="Primary">
+        <button class="mobile-toggle" id="toggle" aria-expanded="false">☰</button>
+        <ul id="menu">
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#services" class="nav-link">Services</a></li>
+          <li><a href="#about" class="nav-link">About</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div style="display:flex;gap:12px;align-items:center">
+        <a class="cta" href="#contact">Register</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <section id="home" class="container hero" aria-labelledby="hero-heading">
+      <div class="hero-left">
+        <div class="card reveal" style="padding:10px 12px;border-radius:999px;display:inline-block;margin-bottom:14px;font-size:13px;color:var(--primary);font-weight:600">OPEN TODAY • Free Entry</div>
+        <h1 id="hero-heading" class="reveal">Ku soo dhawoow <span style="color:var(--primary)">Udug Bila</span> — Carwo Ganacsi oo casri ah</h1>
+        <p class="reveal">Waxaan kuu diyaarinay madal lagu soo bandhigo alaab, xiriir ganacsi, iyo taageero suuq-geyn. Ku biir carwadeena si aad u hesho fursado cusub oo ganacsi.</p>
+
+        <div class="hero-actions reveal">
+          <a class="cta" href="#services">Akhri Adeegyada</a>
+          <a class="hero-link" href="#about" style="text-decoration:none;color:var(--muted);padding:8px 10px;border-radius:8px">Wax dheeri ah</a>
+        </div>
+
+        <div style="margin-top:18px" class="reveal small">
+          <strong>Goob:</strong> Hoolka dhexe — Muqdisho · <strong>Saacadaha:</strong> 09:00–18:00
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="mock-image reveal" role="img" aria-label="Carwo image">
+          <div style="text-align:center;padding:18px">
+            <div style="font-size:18px">Udug Bila</div>
+            <div style="font-size:12px;margin-top:8px;opacity:0.95">Showcase · Network · Grow</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="container" aria-labelledby="services-heading">
+      <div class="section-title">
+        <h2 id="services-heading">Adeegyada</h2>
+      </div>
+      <div class="section-sub">Adeegyadeena loogu talagalay ganacsatada iyo soo bandhigayaasha.</div>
+
+      <div class="services-grid">
+        <article class="service-card reveal" aria-labelledby="s1">
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <div class="service-icon">📦</div>
+            <div>
+              <div id="s1" class="service-title">Bandhig Alaab</div>
+              <div class="service-desc">Goobo soo bandhigid oo casri ah — kuraas, miisaska bandhigga, iyo taageero teknooloji.</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="service-card reveal" aria-labelledby="s2">
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <div class="service-icon">🤝</div>
+            <div>
+              <div id="s2" class="service-title">Networking</div>
+              <div class="service-desc">Fursado aad kula kulanto maal-gashadayaal iyo ganacsato kale.</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="service-card reveal" aria-labelledby="s3">
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <div class="service-icon">📣</div>
+            <div>
+              <div id="s3" class="service-title">Suuq-geyn</div>
+              <div class="service-desc">Xirmooyin suuq-geyn digital ah si shirkaddaada loo horumariyo.</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="service-card reveal" aria-labelledby="s4">
+          <div style="display:flex;gap:12px;align-items:flex-start">
+            <div class="service-icon">🎤</div>
+            <div>
+              <div id="s4" class="service-title">Workshops</div>
+              <div class="service-desc">Tababaro iyo seminaaro xirfadeed oo joogto ah.</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="container" aria-labelledby="about-heading">
+      <div class="section-title">
+        <h2 id="about-heading">About / Nagu saabsan</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-text reveal">
+          <h3 style="margin-top:0">Hal meel — fursado badan</h3>
+          <p>Udug Bila waa carwo ganacsi oo loogu talagalay in lagu xoojiyo ganacsiyada yaryar iyo kuwa dhexe. Waxaan siinaa fursad aad ku soo bandhigto alaabtaada, aad ku hesho macmiil cusub, iyo inaad la kulanto la-hawlgalayaal cusub.</p>
+          <p class="small">Waxaan aaminsanahay in ganacsigu uu kobco marka dadku iska kaashadaan — waxaa naga go'an inaan abuurno jawi furan oo dhiirigelinaya kobaca ganacsiga.</p>
+        </div>
+
+        <div class="about-image reveal" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="container" aria-labelledby="contact-heading">
+      <div class="section-title">
+        <h2 id="contact-heading">Contact Us / Nala soo xiriir</h2>
+      </div>
+
+      <div class="contact-wrap">
+        <form id="contactForm" class="reveal" novalidate>
+          <label class="small" for="name">Magaca</label>
+          <input id="name" name="name" type="text" placeholder="Magacaaga" required>
+
+          <label class="small" for="email">Email</label>
+          <input id="email" name="email" type="email" placeholder="email@example.com" required>
+
+          <label class="small" for="message">Fariin</label>
+          <textarea id="message" name="message" rows="6" placeholder="Wax noo sheeg..." required></textarea>
+
+          <button type="submit">Send Message</button>
+
+          <div id="formFeedback" role="status" aria-live="polite" style="padding-top:8px;color:var(--muted);font-size:14px"></div>
+        </form>
+
+        <aside class="contact-info reveal" aria-label="Contact information">
+          <h4 style="margin:6px 0 10px">Xogta Nala Soo Xiriir</h4>
+          <div class="small" style="margin-bottom:8px">Email: <a href="mailto:info@udugbila.com">info@udugbila.com</a></div>
+          <div class="small" style="margin-bottom:8px">Tel: <a href="tel:+252612345678">+252 61 234 5678</a></div>
+          <div class="small" style="margin-bottom:12px">Cinwaanka: Hoolka Dhexe, Muqdisho, Somalia</div>
+
+          <div style="margin-top:12px">
+            <strong>Saacadaha:</strong>
+            <div class="small">Isniin–Sabti: 09:00–18:00</div>
+          </div>
+
+          <div style="margin-top:16px" class="small">Raac: <a href="#" style="text-decoration:none;color:var(--primary)">Facebook</a> · <a href="#" style="text-decoration:none;color:var(--primary)">Instagram</a></div>
+        </aside>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> Udug Bila — All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    // Simple behaviors: mobile nav toggle, smooth scrolling, active link highlight, reveal animations, form handling
+
+    // Mobile toggle
+    const toggle = document.getElementById('toggle');
+    const menu = document.getElementById('menu');
+    toggle?.addEventListener('click', () => {
+      const shown = menu.style.display === 'flex';
+      menu.style.display = shown ? 'none' : 'flex';
+      menu.style.flexDirection = 'column';
+      menu.style.gap = '8px';
+      toggle.setAttribute('aria-expanded', String(!shown));
+    });
+
+    // Smooth scrolling + active link
+    document.querySelectorAll('a.nav-link, a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function(e){
+        const href = this.getAttribute('href');
+        if(href && href.startsWith('#')){
+          e.preventDefault();
+          const el = document.querySelector(href);
+          if(el){
+            el.scrollIntoView({behavior:'smooth', block:'start'});
+            history.replaceState(null,'',href); // update url fragment
+          }
+        }
+        // close mobile menu after click
+        if(window.innerWidth < 980 && menu) menu.style.display = 'none';
+      });
+    });
+
+    // Active link on scroll
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = Array.from(navLinks).map(link => document.querySelector(link.getAttribute('href')));
+    function onScroll(){
+      const pos = window.scrollY + 120;
+      sections.forEach((sec,i)=>{
+        if(!sec) return;
+        if(pos >= sec.offsetTop && pos < sec.offsetTop + sec.offsetHeight){
+          navLinks.forEach(l => l.classList.remove('active'));
+          navLinks[i].classList.add('active');
+        }
+      });
+    }
+    window.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(e=>{
+        if(e.isIntersecting) e.target.classList.add('visible');
+      });
+    }, {threshold:0.12});
+    reveals.forEach(r => revealObserver.observe(r));
+
+    // Form handling (client-side validation + fake submit)
+    const form = document.getElementById('contactForm');
+    const feedback = document.getElementById('formFeedback');
+    form?.addEventListener('submit', function(e){
+      e.preventDefault();
+      feedback.textContent = '';
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const message = form.message.value.trim();
+      if(!name || !email || !message){
+        feedback.style.color = 'crimson';
+        feedback.textContent = 'Fadlan buuxi dhammaan goobaha.';
+        return;
+      }
+      // basic email regex
+      const re = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+      if(!re.test(email)){
+        feedback.style.color = 'crimson';
+        feedback.textContent = 'Email sax ah geli.';
+        return;
+      }
+      // "Submit" simulation: here you would call your backend. For demo we open mailto as optional fallback.
+      feedback.style.color = 'var(--muted)';
+      feedback.textContent = 'Fariinta waa la diray (tusaale). Waxaan kuugu soo jawaabi doonaa sida ugu dhaqsaha badan.';
+
+      // Optionally open the user's email client (uncomment if desired)
+      // window.location.href = `mailto:info@udugbila.com?subject=${encodeURIComponent('Contact from ' + name)}&body=${encodeURIComponent(message + '\\n\\nEmail: ' + email)}`;
+
+      form.reset();
+    });
+
+    // Fill year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
+
